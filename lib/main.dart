@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:desafio_mobile/view/splash/splash_screen.dart';
 import 'package:desafio_mobile/view/details/details_screen.dart';
 import 'package:desafio_mobile/view/home/home_screen.dart';
 import 'package:desafio_mobile/view/login/login_screen.dart';
-import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,11 +14,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: LoginScreen.id,
+      debugShowCheckedModeBanner: false,
+      initialRoute: SplashScreen.route,
       routes: {
-        LoginScreen.id : (context) => const LoginScreen(),
-        HomeScreen.id : (context) => const HomeScreen(),
-        DetailsScreen.id : (context) => const DetailsScreen(),
+        SplashScreen.route : (context) => const SplashScreen(),
+        LoginScreen.route : (context) => const LoginScreen(),
+        HomeScreen.route : (context) => const HomeScreen(),
+        DetailsScreen.route : (context) => const DetailsScreen(),
       },
     );
   }

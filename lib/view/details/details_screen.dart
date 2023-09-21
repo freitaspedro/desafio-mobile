@@ -1,8 +1,9 @@
-import 'package:desafio_mobile/utils/text_style_util.dart';
 import 'package:flutter/material.dart';
+import 'package:desafio_mobile/utils/text_style_util.dart';
+import 'package:desafio_mobile/utils/color_util.dart';
 
 class DetailsScreen extends StatelessWidget {
-  static const String id = 'details_screen';
+  static const String route = '/details';
 
   const DetailsScreen({super.key});
 
@@ -11,6 +12,8 @@ class DetailsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: ColorUtil.blue),
+        centerTitle: true,
         title: const Text(
           "Imagens",
           style: TextStyleUtil.textAppBar,

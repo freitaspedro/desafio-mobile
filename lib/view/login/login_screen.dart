@@ -1,12 +1,13 @@
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:desafio_mobile/utils/text_style_util.dart';
+import 'package:desafio_mobile/view/home/home_screen.dart';
 import 'package:desafio_mobile/view/login/widget/login_button.dart';
 import 'package:desafio_mobile/view/login/widget/password_field.dart';
 import 'package:desafio_mobile/view/login/widget/user_field.dart';
-import 'package:flutter/material.dart';
-import 'package:desafio_mobile/utils/text_style_util.dart';
-import 'package:desafio_mobile/view/home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  static const String id = 'login_screen';
+  static const String route = '/login';
 
   const LoginScreen({super.key});
 
@@ -16,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final userController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -57,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   String user = userController.text;
                   String password = passwordController.text;
                   if (isValid(user, password)) {
-                    Navigator.pushNamed(context, HomeScreen.id);
+                    saveUser();
                   } else {
                     ScaffoldMessenger
                         .of(context)
@@ -84,4 +86,15 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.red,
     );
   }
+
+  Future<void> saveUser() async {
+    final SharedPreferences prefs = await _prefs;
+    prefs.setBool("isLoggedIn", true);
+    navigateToHome();
+  }
+
+  void navigateToHome() {
+    Navigator.pushReplacementNamed(context, HomeScreen.route);
+  }
+
 }
