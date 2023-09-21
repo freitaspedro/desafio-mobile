@@ -19,4 +19,9 @@ class TextStyleUtil {
     fontWeight: FontWeight.w500,
     fontStyle: FontStyle.italic,
   );
+  static const TextStyle textAppBar = TextStyle(
+    fontSize: 18,
+    color: ColorUtil.blue,
+    fontWeight: FontWeight.w600,
+  );
 }

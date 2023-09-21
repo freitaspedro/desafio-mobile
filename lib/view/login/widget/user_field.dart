@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
-import '../../../utils/color_util.dart';
+import 'package:desafio_mobile/utils/color_util.dart';
 
 class UserField extends StatelessWidget {
-  const UserField({super.key});
+
+  final TextEditingController? controller;
+
+  const UserField({super.key, this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 30),
+      padding: const EdgeInsets.only(bottom: 30.0),
       child: Container(
-        padding: const EdgeInsets.only(left: 10),
-        width: 360,
-        height: 56,
+        padding: const EdgeInsets.only(left: 10.0),
+        width: 360.0,
+        height: 56.0,
         decoration: BoxDecoration(
           border: Border.all(color: ColorUtil.green, width: 1.4),
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          borderRadius: const BorderRadius.all(Radius.circular(12.0)),
           color: ColorUtil.offwhite,
         ),
-        child: const TextField(
+        child: TextFormField(
+          controller: controller,
           autofocus: false,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
               focusColor: Colors.transparent,
               hintText: "Usuário",
               border: OutlineInputBorder(borderSide: BorderSide.none)),

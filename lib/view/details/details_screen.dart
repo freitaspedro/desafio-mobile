@@ -1,19 +1,18 @@
 import 'package:desafio_mobile/utils/text_style_util.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  static const String id = 'home_screen';
+class DetailsScreen extends StatelessWidget {
+  static const String id = 'details_screen';
 
-  const HomeScreen({super.key});
+  const DetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
-          "Locais",
+          "Imagens",
           style: TextStyleUtil.textAppBar,
         ),
         backgroundColor: Colors.white,

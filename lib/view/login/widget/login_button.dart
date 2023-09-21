@@ -1,37 +1,31 @@
+import 'package:desafio_mobile/utils/color_util.dart';
 import 'package:desafio_mobile/utils/text_style_util.dart';
-import 'package:desafio_mobile/view/home/home_screen.dart';
 import 'package:flutter/material.dart';
-import '../../../utils/color_util.dart';
 
 class LoginButton extends StatelessWidget {
-  const LoginButton({super.key});
+
+  final Function()? onPressed;
+
+  const LoginButton({super.key, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        _navigateToHomeScreen(context);
-      },
-      child: Container(
-        width: 180,
-        height: 40,
-        decoration: const BoxDecoration(
-          color: ColorUtil.blue,
-          borderRadius: BorderRadius.all(Radius.circular(50)),
-        ),
-        child: const Center(
-          child: Text(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: Material(
+        elevation: 0.0,
+        color: ColorUtil.blue,
+        borderRadius: BorderRadius.circular(30.0),
+        child: MaterialButton(
+          onPressed: onPressed,
+          minWidth: 200.0,
+          height: 42.0,
+          child: const Text(
             "Login",
             style: TextStyleUtil.textButtonLogin,
           ),
         ),
       ),
     );
-  }
-
-  void _navigateToHomeScreen(BuildContext context) {
-    Navigator
-        .of(context)
-        .push(MaterialPageRoute(builder: (context) => const HomeScreen()));
   }
 }

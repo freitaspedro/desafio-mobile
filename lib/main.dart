@@ -1,3 +1,5 @@
+import 'package:desafio_mobile/view/details/details_screen.dart';
+import 'package:desafio_mobile/view/home/home_screen.dart';
 import 'package:desafio_mobile/view/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -10,8 +12,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: LoginScreen(),
+    return MaterialApp(
+      initialRoute: LoginScreen.id,
+      routes: {
+        LoginScreen.id : (context) => const LoginScreen(),
+        HomeScreen.id : (context) => const HomeScreen(),
+        DetailsScreen.id : (context) => const DetailsScreen(),
+      },
     );
   }
 }
