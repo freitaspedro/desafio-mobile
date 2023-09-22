@@ -22,20 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Location>? listLocation;
   bool isWaiting = false;
 
-  Future<void> logout() async {
-    final SharedPreferences prefs = await _prefs;
-    prefs.clear();
-    navigateToLogin();
-  }
-
-  void navigateToLogin() {
-    Navigator.pushNamedAndRemoveUntil(
-        context,
-        SplashScreen.route,
-        ModalRoute.withName("/home")
-    );
-  }
-
   @override
   void initState() {
     super.initState();
@@ -85,16 +71,34 @@ class _HomeScreenState extends State<HomeScreen> {
         shadowColor: Colors.white,
         elevation: 0.0,
       ),
-      body: ListView.separated(
-          padding: const EdgeInsets.all(8.0),
-          itemCount: listLocation!.length,
-          itemBuilder: (BuildContext context, int index) {
-            return LocationItem(location: listLocation?.elementAt(index));
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return const Divider(height: 1.0);
-          },
-        ),
+      body: !isWaiting ? makeList() : const SizedBox(),
+    );
+  }
+
+  ListView makeList() {
+    return ListView.separated(
+      padding: const EdgeInsets.all(8.0),
+      itemCount: listLocation!.length,
+      itemBuilder: (BuildContext context, int index) {
+        return LocationItem(location: listLocation?.elementAt(index));
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return const Divider(height: 1.0);
+      },
+    );
+  }
+
+  Future<void> logout() async {
+    final SharedPreferences prefs = await _prefs;
+    prefs.clear();
+    navigateToLogin();
+  }
+
+  void navigateToLogin() {
+    Navigator.pushNamedAndRemoveUntil(
+        context,
+        SplashScreen.route,
+        ModalRoute.withName("/home")
     );
   }
 

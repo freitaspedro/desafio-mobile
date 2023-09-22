@@ -18,26 +18,23 @@ class _LocationItemState extends State<LocationItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 15.0),
-      width: 100.0,
+      padding: const EdgeInsets.only(left: 10.0, top: 15.0, bottom: 15.0),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Flexible(
-            child: Column(
-              children: [
-                Text(
-                  "| ${widget.location?.locationInfo.name} |",
-                  style: TextStyleUtil.titleList,
-                ),
-                const SizedBox(height: 8.0),
-                Text(
-                  "| ${widget.location?.locationInfo.address.address} |",
-                  style: TextStyleUtil.subtitleList,
-                )
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.location!.locationInfo.name,
+                style: TextStyleUtil.titleList,
+              ),
+              const SizedBox(height: 8.0),
+              Text(
+                widget.location!.locationInfo.address.address,
+                style: TextStyleUtil.subtitleList,
+              ),
+            ],
           ),
           IconButton(
               onPressed: () {

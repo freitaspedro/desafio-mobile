@@ -22,13 +22,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
 
   @override
-  void dispose() {
-    userController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -73,14 +66,21 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  @override
+  void dispose() {
+    userController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   bool isValid(String user, String password) {
-    return (user == "gabriel" && password == "140120");
+    return (user.trim() == "gabriel" && password.trim() == "140120");
   }
 
   SnackBar invalidUserSnackBar() {
     return const SnackBar(
       content: Text(
-        'Usuário inválido!',
+        'Usuário ou senha inválido!',
         style: TextStyle(color: Colors.white),
       ),
       backgroundColor: Colors.red,

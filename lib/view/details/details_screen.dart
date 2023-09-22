@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:desafio_mobile/utils/text_style_util.dart';
 import 'package:desafio_mobile/utils/color_util.dart';
 import 'package:desafio_mobile/model/location.dart';
+import 'package:desafio_mobile/view/details/widget/location_video.dart';
 
 class DetailsScreen extends StatelessWidget {
   static const String route = '/details';
@@ -40,12 +41,8 @@ class DetailsScreen extends StatelessWidget {
                 style: TextStyleUtil.subtitleDetails,
               ),
             ),
-            const SizedBox(height: 10.0),
-            SizedBox(
-              width: 190.0,
-              height: 190.0,
-              child: Image.asset('assets/images/logo.png'),
-            ),
+            const SizedBox(height: 32.0),
+            LocationVideo(uri: location!.uri)
           ],
         ),
       ),
