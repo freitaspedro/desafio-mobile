@@ -1,6 +1,6 @@
 {
   "uuid": "a447257c-d99b-417e-badb-639c7005bdd0",
-  "lastMigration": 27,
+  "lastMigration": 28,
   "name": "Gabriel mobile challenge",
   "endpointPrefix": "",
   "latency": 0,
@@ -30,7 +30,8 @@
           "rulesOperator": "OR",
           "disableTemplating": false,
           "fallbackTo404": false,
-          "default": true
+          "default": true,
+          "crudKey": "id"
         },
         {
           "uuid": "ac81fdd5-3f2d-43d8-81f9-f6830c293e8b",
@@ -55,7 +56,8 @@
           "rulesOperator": "OR",
           "disableTemplating": false,
           "fallbackTo404": false,
-          "default": false
+          "default": false,
+          "crudKey": "id"
         },
         {
           "uuid": "6cc7bc1d-5bd1-4331-87e8-e27dbd65bfe3",
@@ -80,7 +82,8 @@
           "rulesOperator": "OR",
           "disableTemplating": false,
           "fallbackTo404": false,
-          "default": false
+          "default": false,
+          "crudKey": "id"
         }
       ],
       "enabled": true,

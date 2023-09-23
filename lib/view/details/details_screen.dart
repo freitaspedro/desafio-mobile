@@ -35,9 +35,10 @@ class DetailsScreen extends StatelessWidget {
               style: TextStyleUtil.titleDetails,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              padding: const EdgeInsets.all(20.0),
               child: Text(
                 location!.videoInfo.subtitle,
+                textAlign: TextAlign.center,
                 style: TextStyleUtil.subtitleDetails,
               ),
             ),

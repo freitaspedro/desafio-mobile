@@ -28,10 +28,16 @@ class _HomeScreenState extends State<HomeScreen> {
     getData();
   }
 
+  Future<void> _getData() async {
+    setState(() {
+      getData();
+    });
+  }
+
   void getData() async {
     isWaiting = true;
     try {
-      var data = await LocationData().getData();
+      List<Location>? data = await LocationData().getData();
       isWaiting = false;
       setState(() {
         listLocation = data;
@@ -71,8 +77,21 @@ class _HomeScreenState extends State<HomeScreen> {
         shadowColor: Colors.white,
         elevation: 0.0,
       ),
-      body: !isWaiting ? makeList() : const SizedBox(),
+      body: !isWaiting ? homeContent() : progress(),
     );
+  }
+
+  Widget progress() {
+    return const Center(child: CircularProgressIndicator());
+  }
+
+  Widget homeContent() {
+    return RefreshIndicator(
+        onRefresh: _getData,
+        child: listLocation != null ?
+            (listLocation!.isNotEmpty ? makeList() : emptyList())
+            : emptyList()
+      );
   }
 
   ListView makeList() {
@@ -85,6 +104,15 @@ class _HomeScreenState extends State<HomeScreen> {
       separatorBuilder: (BuildContext context, int index) {
         return const Divider(height: 1.0);
       },
+    );
+  }
+
+  Widget emptyList() {
+    return const Center(
+      child: Text(
+        "Nenhum local disponível no momento",
+        textAlign: TextAlign.center,
+      ),
     );
   }
 

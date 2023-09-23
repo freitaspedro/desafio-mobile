@@ -43,7 +43,7 @@ class _LocationVideoState extends State<LocationVideo> {
                     ],
                 ),
             )
-            : Container(),
+            : const Center(child: CircularProgressIndicator(),),
       ),
     );
   }
