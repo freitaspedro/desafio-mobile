@@ -1,9 +1,11 @@
-import 'package:desafio_mobile/view/home/widget/location_item.dart';
+import 'package:desafio_mobile/view/home/widget/location_list.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:desafio_mobile/utils/color_util.dart';
 import 'package:desafio_mobile/utils/text_style_util.dart';
 import 'package:desafio_mobile/view/splash/splash_screen.dart';
+import 'package:desafio_mobile/view/home/widget/empty_list.dart';
+import 'package:desafio_mobile/view/commons/widget/progress.dart';
 import 'package:desafio_mobile/model/location.dart';
 import 'package:desafio_mobile/service/location_data.dart';
 
@@ -77,43 +79,16 @@ class _HomeScreenState extends State<HomeScreen> {
         shadowColor: Colors.white,
         elevation: 0.0,
       ),
-      body: !isWaiting ? homeContent() : progress(),
+      body: !isWaiting ? RefreshIndicator(
+          onRefresh: _getData,
+          child: (isNotNullAndNotEmpty(listLocation)) ?
+              LocationList(listLocation: listLocation!) : const EmptyList()
+      ) : const Progress(),
     );
   }
 
-  Widget progress() {
-    return const Center(child: CircularProgressIndicator());
-  }
-
-  Widget homeContent() {
-    return RefreshIndicator(
-        onRefresh: _getData,
-        child: listLocation != null ?
-            (listLocation!.isNotEmpty ? makeList() : emptyList())
-            : emptyList()
-      );
-  }
-
-  ListView makeList() {
-    return ListView.separated(
-      padding: const EdgeInsets.all(8.0),
-      itemCount: listLocation!.length,
-      itemBuilder: (BuildContext context, int index) {
-        return LocationItem(location: listLocation?.elementAt(index));
-      },
-      separatorBuilder: (BuildContext context, int index) {
-        return const Divider(height: 1.0);
-      },
-    );
-  }
-
-  Widget emptyList() {
-    return const Center(
-      child: Text(
-        "Nenhum local disponível no momento",
-        textAlign: TextAlign.center,
-      ),
-    );
+  bool isNotNullAndNotEmpty<T>(List<T>? list) {
+    return list != null && list.isNotEmpty;
   }
 
   Future<void> logout() async {

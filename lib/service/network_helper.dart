@@ -9,31 +9,42 @@ class NetworkHelper {
   NetworkHelper(this.url);
 
   Future<Map<String, dynamic>?>? getData() async {
-    Uri uri = Uri.parse(url);
-    http.Response response = await http.get(uri);
-    switch (response.statusCode) {
-      case 202:
-        if (kDebugMode) {
-          print('Request successful - 202');
-        }
-        return convert.jsonDecode(response.body);
-      case 400:
-        if (kDebugMode) {
-          print('Bad request - 400');
-          print(getMessageFromResponse(convert.jsonDecode(response.body)));
-        }
-        return null;
-      case 500:
-        if (kDebugMode) {
-          print('Internal server error - 500');
-          print(getMessageFromResponse(convert.jsonDecode(response.body)));
-        }
-        return null;
-      default:
-        if (kDebugMode) {
-          print('Request failed with status: ${response.statusCode}');
-        }
-        return null;
+    final uri = Uri.parse(url);
+    const timeoutDuration = Duration(milliseconds: 10000);
+    try {
+      if (kDebugMode) {
+        print('Requesting..');
+      }
+      http.Response response = await http.get(uri).timeout(timeoutDuration);
+      switch (response.statusCode) {
+        case 202:
+          if (kDebugMode) {
+            print('Request successful - 202');
+          }
+          return convert.jsonDecode(response.body);
+        case 400:
+          if (kDebugMode) {
+            print('Bad request - 400');
+            print(getMessageFromResponse(convert.jsonDecode(response.body)));
+          }
+          return null;
+        case 500:
+          if (kDebugMode) {
+            print('Internal server error - 500');
+            print(getMessageFromResponse(convert.jsonDecode(response.body)));
+          }
+          return null;
+        default:
+          if (kDebugMode) {
+            print('Request failed with status: ${response.statusCode}');
+          }
+          return null;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Request error: $e');
+      }
+      return null;
     }
   }
 

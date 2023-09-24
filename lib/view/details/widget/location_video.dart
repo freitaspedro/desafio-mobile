@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:desafio_mobile/view/commons/widget/progress.dart';
 
 class LocationVideo extends StatefulWidget {
   final String uri;
@@ -43,7 +44,7 @@ class _LocationVideoState extends State<LocationVideo> {
                     ],
                 ),
             )
-            : const Center(child: CircularProgressIndicator(),),
+            : const Progress(),
       ),
     );
   }
