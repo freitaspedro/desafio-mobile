@@ -1,11 +1,11 @@
-import 'package:desafio_mobile/view/home/widget/location_list.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:desafio_mobile/utils/color_util.dart';
 import 'package:desafio_mobile/utils/text_style_util.dart';
 import 'package:desafio_mobile/view/splash/splash_screen.dart';
-import 'package:desafio_mobile/view/home/widget/empty_list.dart';
 import 'package:desafio_mobile/view/commons/widget/progress.dart';
+import 'package:desafio_mobile/view/home/widget/empty_list.dart';
+import 'package:desafio_mobile/view/home/widget/location_list.dart';
 import 'package:desafio_mobile/model/location.dart';
 import 'package:desafio_mobile/service/location_data.dart';
 
@@ -21,32 +21,54 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  List<Location>? listLocation;
-  bool isWaiting = false;
+  late List<Location> _listLocation;
+  int _limit = 10;
+  bool _loading = false;
+  bool _error = false;
 
   @override
   void initState() {
     super.initState();
+    _listLocation = [];
+    _loading = true;
+    _error = false;
     getData();
   }
 
-  Future<void> _getData() async {
+  void getData() async {
+    _loading = true;
+    try {
+      List<Location>? data = await LocationData().getData(_limit);
+      if (data != null) {
+        _onSuccess(data);
+      } else {
+        _onError;
+      }
+    } catch (e) {
+      _onError;
+    }
+  }
+
+  _onSuccess(List<Location> data) {
     setState(() {
-      getData();
+      _loading = false;
+      _listLocation = _listLocation + data;
     });
   }
 
-  void getData() async {
-    isWaiting = true;
-    try {
-      List<Location>? data = await LocationData().getData();
-      isWaiting = false;
-      setState(() {
-        listLocation = data;
-      });
-    } catch (e) {
-      throw Exception(e);
-    }
+  _onError() {
+    setState(() {
+      _loading = false;
+      _error = true;
+    });
+  }
+
+  _onTryAgain() {
+    setState(() {
+      _loading = true;
+      _error = false;
+      getData();
+    });
   }
 
   @override
@@ -79,16 +101,14 @@ class _HomeScreenState extends State<HomeScreen> {
         shadowColor: Colors.white,
         elevation: 0.0,
       ),
-      body: !isWaiting ? RefreshIndicator(
-          onRefresh: _getData,
-          child: (isNotNullAndNotEmpty(listLocation)) ?
-              LocationList(listLocation: listLocation!) : const EmptyList()
-      ) : const Progress(),
+      body: _listLocation.isEmpty ?
+          (_loading ? const Progress() : EmptyList(onTryAgain: _onTryAgain))
+          : LocationList(
+                listLocation: _listLocation,
+                error: _error,
+                onTryAgain: _onTryAgain
+            )
     );
-  }
-
-  bool isNotNullAndNotEmpty<T>(List<T>? list) {
-    return list != null && list.isNotEmpty;
   }
 
   Future<void> logout() async {

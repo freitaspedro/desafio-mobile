@@ -2,38 +2,39 @@ import 'package:desafio_mobile/model/location.dart';
 import 'package:desafio_mobile/service/network_helper.dart';
 import 'package:desafio_mobile/utils/mock.dart';
 
+/// Method | URL | Description | Status Code
+/// -------|-----|-------------|------------
+/// GET    | http://localhost:3001/v1/videos/history            | returns a empty list         | 202-ACCEPT
+/// GET    | http://localhost:3001/v1/videos/history?limit=10   | returns a list with 10 items | 202-ACCEPT
+/// GET    | http://localhost:3001/v1/videos/history?limit=20   | returns a list with 20 items | 202-ACCEPT
+/// GET    | http://localhost:3001/v1/videos/history?limit=-1   | returns a not found message  | 400-BAD REQUEST
+/// GET    | http://localhost:3001/v1/videos/history?limit=-2   | returns a list with 20 items | 500-INTERNAL SERVER ERROR
+///
+/// 10.0.2.2
+///
 
-const apiUrl = 'http://localhost:3001/v1/videos/history?limit=10';              //202 - ACCEPT
-// const apiUrl = 'http://10.0.2.2:3001/v1/videos/history?limit=10';               //202 - ACCEPT
-// const apiUrl = 'http://10.0.2.2:3001/v1/videos/history?limit=20';               //202 - ACCEPT
-// const apiUrl = 'http://10.0.2.2:3001/v1/videos/history';                        //202 - ACCEPT
-// const apiUrl = 'http://10.0.2.2:3001/v1/videos/history?limit=-1';               //400 - BAD REQUEST
-// const apiUrl = 'http://10.0.2.2:3001/v1/videos/history?limit=-2';               //500 - INTERNAL SERVER ERROR
+const String host = 'localhost';
+const String port = '3001';
 
 class LocationData {
 
-  List<Location>? listLocation;
-
-  Future<List<Location>?>? getData() async {
-    NetworkHelper networkHelper  = NetworkHelper(apiUrl);
+  Future<List<Location>?>? getData(int limit) async {
+    String url = 'http://$host:$port/v1/videos/history?limit=$limit';
+    NetworkHelper networkHelper  = NetworkHelper(url);
     Map<String, dynamic>? result = await networkHelper.getData();
     if (result != null) {
-      listLocation = List<Location>.from(
+      return List<Location>.from(
           result['data']
               .map((location) => Location.fromJson(location))
               .toList()
       );
     } else {
-      listLocation = null;
+      return null;
     }
-    return listLocation;
   }
 
-  List<Location>? mockListLocation;
-
   Future<List<Location>?>? getMockData() async {
-    mockListLocation = Mock.listLocationMocked;
-    return mockListLocation;
+    return Mock.listLocationMocked;
   }
 
 }
