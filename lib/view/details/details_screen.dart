@@ -43,7 +43,7 @@ class DetailsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32.0),
-            LocationVideo(uri: location!.uri)
+            LocationVideo(uri: location!.uri),
           ],
         ),
       ),

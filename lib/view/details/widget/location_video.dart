@@ -1,6 +1,7 @@
+import 'package:desafio_mobile/view/commons/widget/progress.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:desafio_mobile/view/commons/widget/progress.dart';
+import 'package:chewie/chewie.dart';
 
 class LocationVideo extends StatefulWidget {
   final String uri;
@@ -12,47 +13,59 @@ class LocationVideo extends StatefulWidget {
 }
 
 class _LocationVideoState extends State<LocationVideo> {
+  late VideoPlayerController _videoPlayerController;
+  late ChewieController _chewieController;
 
-  late VideoPlayerController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.uri))
-      ..initialize().then((_) {
-        setState(() {
-          _controller.play();
-        });
-      });
-    _controller.setLooping(true);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 22.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12.0),
-        child: _controller.value.isInitialized
-            ? AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      VideoPlayer(_controller),
-                      VideoProgressIndicator(_controller, allowScrubbing: true),
-                    ],
-                ),
+  void initPlayer() {
+    _videoPlayerController = VideoPlayerController
+        .networkUrl(Uri.parse(widget.uri))
+     ..initialize().then(
+            (_) => setState(
+                () => _chewieController = ChewieController(
+                  videoPlayerController: _videoPlayerController,
+                  aspectRatio: _videoPlayerController.value.aspectRatio,
+                  autoPlay: true,
+                  looping: true,
+                  errorBuilder: (context, errorMessage) {
+                    return Center(
+                      child: Text(
+                        errorMessage,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    );
+                  },
+                )
             )
-            : const Progress(),
-      ),
     );
   }
 
   @override
+  void initState() {
+    super.initState();
+    initPlayer();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _videoPlayerController.value.isInitialized ? Padding(
+      padding: const EdgeInsets.all(22.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12.0),
+        child: AspectRatio(
+          aspectRatio: _videoPlayerController.value.aspectRatio,
+          child: Chewie(
+              controller: _chewieController
+          ),
+        ),
+      ),
+    ) : const Progress();
+  }
+
+  @override
   void dispose() {
+    _videoPlayerController.dispose();
+    _chewieController.dispose();
     super.dispose();
-    _controller.dispose();
   }
 
 }

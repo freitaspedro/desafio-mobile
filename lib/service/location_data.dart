@@ -3,8 +3,8 @@ import 'package:desafio_mobile/service/network_helper.dart';
 import 'package:desafio_mobile/utils/mock.dart';
 
 
-// const apiUrl = 'http://localhost:3001/v1/videos/history?limit=10';              //202 - ACCEPT
-const apiUrl = 'http://10.0.2.2:3001/v1/videos/history?limit=10';               //202 - ACCEPT
+const apiUrl = 'http://localhost:3001/v1/videos/history?limit=10';              //202 - ACCEPT
+// const apiUrl = 'http://10.0.2.2:3001/v1/videos/history?limit=10';               //202 - ACCEPT
 // const apiUrl = 'http://10.0.2.2:3001/v1/videos/history?limit=20';               //202 - ACCEPT
 // const apiUrl = 'http://10.0.2.2:3001/v1/videos/history';                        //202 - ACCEPT
 // const apiUrl = 'http://10.0.2.2:3001/v1/videos/history?limit=-1';               //400 - BAD REQUEST
