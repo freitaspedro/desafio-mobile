@@ -42,10 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
       if (data != null) {
         _onSuccess(data);
       } else {
-        _onError;
+        _onError();
       }
     } catch (e) {
-      _onError;
+      _onError();
     }
   }
 

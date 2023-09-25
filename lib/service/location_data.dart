@@ -4,11 +4,11 @@ import 'package:desafio_mobile/utils/mock.dart';
 
 /// Method | URL | Description | Status Code
 /// -------|-----|-------------|------------
-/// GET    | http://localhost:3001/v1/videos/history            | returns a empty list         | 202-ACCEPT
-/// GET    | http://localhost:3001/v1/videos/history?limit=10   | returns a list with 10 items | 202-ACCEPT
-/// GET    | http://localhost:3001/v1/videos/history?limit=20   | returns a list with 20 items | 202-ACCEPT
-/// GET    | http://localhost:3001/v1/videos/history?limit=-1   | returns a not found message  | 400-BAD REQUEST
-/// GET    | http://localhost:3001/v1/videos/history?limit=-2   | returns a list with 20 items | 500-INTERNAL SERVER ERROR
+/// GET    | http://localhost:3001/v1/videos/history            | returns a empty list           | 202-ACCEPT
+/// GET    | http://localhost:3001/v1/videos/history?limit=10   | returns a list with 10 items   | 202-ACCEPT
+/// GET    | http://localhost:3001/v1/videos/history?limit=20   | returns a list with 20 items   | 202-ACCEPT
+/// GET    | http://localhost:3001/v1/videos/history?limit=-1   | returns a not found message    | 400-BAD REQUEST
+/// GET    | http://localhost:3001/v1/videos/history?limit=-2   | returns a server error message | 500-INTERNAL SERVER ERROR
 ///
 /// 10.0.2.2
 ///
